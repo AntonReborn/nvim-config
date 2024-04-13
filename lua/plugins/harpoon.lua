@@ -43,16 +43,16 @@ return {
 		end, { desc = "[4]st buffer" })
 
 		-- Toggle previous & next buffers stored within Harpoon list
-		vim.keymap.set("n", "<Tab>", function()
+		vim.keymap.set("n", "<A-n>", function()
 			harpoon:list():next()
 		end)
 
 		-- NEW COMMENT
-		vim.keymap.set("n", "<S-Tab>", function()
+		vim.keymap.set("n", "<A-p>", function()
 			harpoon:list():prev()
 		end)
 
-		if harpoon:list():length() > 0 then
+		if harpoon:list():length() > 0 and vim.fn.argv()[1] == "." then
 			harpoon:list():select(1)
 		end
 	end,
