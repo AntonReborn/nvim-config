@@ -51,5 +51,9 @@ return {
 		vim.keymap.set("n", "<S-Tab>", function()
 			harpoon:list():prev()
 		end)
+
+		if harpoon:list():length() > 0 then
+			harpoon:list():select(1)
+		end
 	end,
 }
