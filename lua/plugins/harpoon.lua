@@ -1,59 +1,115 @@
 return {
-	"ThePrimeagen/harpoon",
-	branch = "harpoon2",
+	"AntonReborn/harpoon",
+	branch = "sync-cursor",
 	dependencies = { "nvim-lua/plenary.nvim" },
-	opts = {
-		save_on_toggle = true,
-		sync_on_ui_close = true,
-	},
-	config = function()
-		local harpoon = require("harpoon")
-		vim.keymap.set("n", "<leader>a", function()
-			harpoon:list():add()
-		end, { desc = "[A]dd to Harpoon2" })
+	keys = {
+		{
+			"<leader>a",
+			function()
+				require("harpoon"):list():add()
+			end,
+			mode = "n",
+			{ desc = "[A]dd to Harpoon2" },
+		},
 
-		vim.keymap.set("n", "<C-e>", function()
-			harpoon.ui:toggle_quick_menu(harpoon:list())
-		end)
+		{
+			"<C-e>",
+			function()
+				require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
+			end,
+			mode = "n",
+		},
 
-		vim.keymap.set("n", "<C-f>", function()
-			harpoon:list():select(1)
-		end)
-		vim.keymap.set("n", "<C-s>", function()
-			harpoon:list():select(2)
-		end)
-		vim.keymap.set("n", "<C-t>", function()
-			harpoon:list():select(3)
-		end)
+		{
+			"<C-f>",
+			function()
+				require("harpoon"):list():select(1)
+			end,
+			mode = "n",
+		},
 
-		vim.keymap.set("n", "<leader>h1", function()
-			harpoon:list():select(1)
-		end, { desc = "[1]st buffer (<C-f>)" })
+		{
+			"<C-s>",
+			function()
+				require("harpoon"):list():select(2)
+			end,
+			mode = "n",
+		},
+		{
+			"<C-t>",
+			function()
+				require("harpoon"):list():select(3)
+			end,
+			mode = "n",
+		},
 
-		vim.keymap.set("n", "<leader>h2", function()
-			harpoon:list():select(2)
-		end, { desc = "[2]st buffer (<C-s>)" })
+		{
+			"<leader>h1",
+			function()
+				require("harpoon"):list():select(1)
+			end,
+			mode = "n",
+			{ desc = "[1]st buffer (<C-f>)" },
+		},
 
-		vim.keymap.set("n", "<leader>h3", function()
-			harpoon:list():select(3)
-		end, { desc = "[3]st buffer (<C-t>)" })
+		{
+			"<leader>h2",
+			function()
+				require("harpoon"):list():select(2)
+			end,
+			mode = "n",
+			{ desc = "[2]st buffer (<C-s>)" },
+		},
 
-		vim.keymap.set("n", "<leader>h4", function()
-			harpoon:list():select(4)
-		end, { desc = "[4]st buffer" })
+		{
+			"<leader>h3",
+			function()
+				require("harpoon"):list():select(3)
+			end,
+			mode = "n",
+			{ desc = "[3]st buffer (<C-t>)" },
+		},
+
+		{
+			"<leader>h4",
+			function()
+				require("harpoon"):list():select(4)
+			end,
+			mode = "n",
+			{ desc = "[4]st buffer" },
+		},
 
 		-- Toggle previous & next buffers stored within Harpoon list
-		vim.keymap.set("n", "<A-n>", function()
-			harpoon:list():next()
-		end)
+		{
+			"<A-n>",
+			function()
+				require("harpoon"):list():next()
+			end,
+			mode = "n",
+		},
 
-		-- NEW COMMENT
-		vim.keymap.set("n", "<A-p>", function()
-			harpoon:list():prev()
-		end)
+		{
+			"<A-p>",
+			function()
+				require("harpoon"):list():prev()
+			end,
+			mode = "n",
+		},
+	},
 
-		if harpoon:list():length() > 0 and vim.fn.argv()[1] == "." then
-			harpoon:list():select(1)
+	init = function()
+		if require("harpoon"):list():length() > 0 and vim.fn.argv()[1] == "." then
+			require("harpoon"):list():select(1)
 		end
+	end,
+
+	config = function()
+		local harpoon = require("harpoon")
+		harpoon:setup({
+			settings = {
+				save_on_toggle = false,
+				sync_on_ui_close = false,
+			},
+		})
 	end,
 }

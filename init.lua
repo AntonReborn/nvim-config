@@ -35,6 +35,26 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
+	{
+		"bbjornstad/pretty-fold.nvim",
+		opts = {
+			sections = {
+				left = {
+					"content",
+				},
+				right = {
+					" ",
+					"number_of_folded_lines",
+					": ",
+					"percentage",
+					" ",
+					function(config)
+						return config.fill_char:rep(3)
+					end,
+				},
+			},
+		},
+	},
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 
@@ -48,6 +68,7 @@ require("lazy").setup({
 	--    require('Comment').setup({})
 
 	-- "gc" to comment visual regions/lines
+	--
 	{ "numToStr/Comment.nvim", opts = {} },
 
 	-- Here is a more advanced example where we pass configuration
@@ -292,6 +313,8 @@ require("lazy").setup({
 					map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
 
 					-- Fuzzy find all the symbols in your current document.
+					-- TEST
+					--
 					--  Symbols are things like variables, functions, types, etc.
 					map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
 
@@ -496,6 +519,16 @@ require("lazy").setup({
 			luasnip.config.setup({})
 
 			cmp.setup({
+				window = {
+					completion = {
+						border = "rounded",
+						winhighlight = "Normal:CmpNormal",
+					},
+					documentation = {
+						border = "rounded",
+						winhighlight = "Normal:CmpNormal",
+					},
+				},
 				snippet = {
 					expand = function(args)
 						luasnip.lsp_expand(args.body)
@@ -587,17 +620,21 @@ require("lazy").setup({
 	},
 
 	-- Highlight todo, notes, etc in comments
-	{
-		"folke/todo-comments.nvim",
-		event = "VimEnter",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = { signs = false },
-	},
+	-- {
+	-- 	"folke/todo-comments.nvim",
+	-- 	event = "VimEnter",
+	-- 	dependencies = { "nvim-lua/plenary.nvim" },
+	-- 	opts = { signs = false },
+	-- },
 
 	{ -- Collection of various small independent plugins/modules
 		"echasnovski/mini.nvim",
 		config = function()
-			require("mini.files").setup({})
+			require("mini.files").setup({
+				mappings = {
+					close = "q",
+				},
+			})
 
 			vim.keymap.set("n", "-", function()
 				MiniFiles.open()
