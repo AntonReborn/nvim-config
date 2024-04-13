@@ -11,6 +11,9 @@ require("options")
 require("keymaps")
 require("autocmds")
 
+-- require("remember_lines")
+
+-- dsad
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -78,8 +81,7 @@ require("lazy").setup({
 	--
 	-- Then, because we use the `config` key, the configuration only runs
 	-- after the plugin has been loaded:
-	--  config = function() ... end
-
+	--  config = function() ... end, TEST LOCATION
 	{ -- Useful plugin to show you pending keybinds.
 		"folke/which-key.nvim",
 		event = "VimEnter", -- Sets the loading event to 'VimEnter'
@@ -93,6 +95,7 @@ require("lazy").setup({
 				["<leader>r"] = { name = "[R]ename", _ = "which_key_ignore" },
 				["<leader>s"] = { name = "[S]earch", _ = "which_key_ignore" },
 				["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
+				["<leader>h"] = { name = "[H]arpoon", _ = "which_key_ignore" },
 			})
 		end,
 	},
@@ -175,7 +178,11 @@ require("lazy").setup({
 			local builtin = require("telescope.builtin")
 			vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 			vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
+
+			-- Find files <l>sf/Ctrl+n
 			vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
+			vim.keymap.set("n", "<C-n>", builtin.find_files, { desc = "[S]earch [F]iles" })
+
 			vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
 			vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
 			vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
@@ -270,9 +277,7 @@ require("lazy").setup({
 					-- Jump to the definition of the word under your cursor.
 					--  This is where a variable was first declared, or where a function is defined, etc.
 					--  To jump back, press <C-t>.
-					map("gd", function()
-						require("telescope.builtin").lsp_definitions({ jump_type = "vsplit" })
-					end, "[G]oto [D]efinition")
+					map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 
 					-- Find references for the word under your cursor.
 					map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
@@ -351,10 +356,10 @@ require("lazy").setup({
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
-				-- clangd = {},
+				clangd = {},
 				-- gopls = {},
-				-- pyright = {},
-				-- rust_analyzer = {},
+				pyright = {},
+				rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
 				-- Some languages (like typescript) have entire language plugins that can be useful:
@@ -581,7 +586,19 @@ require("lazy").setup({
 
 	{ -- Collection of various small independent plugins/modules
 		"echasnovski/mini.nvim",
+		keys = {
+			{
+				"-",
+				function()
+					MiniFiles.open()
+				end,
+				mode = "n",
+			},
+		},
 		config = function()
+			require("mini.files").setup({
+				mappings = { close = "<Tab>" },
+			})
 			-- Better Around/Inside textobjects
 			--
 			-- Examples:
@@ -595,7 +612,12 @@ require("lazy").setup({
 			-- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
 			-- - sd'   - [S]urround [D]elete [']quotes
 			-- - sr)'  - [S]urround [R]eplace [)] [']
-			require("mini.surround").setup()
+			require("mini.surround").setup({
+				respect_selection_type = true,
+				custom_surroundings = {
+					["{"] = { output = { left = "{", right = "}" } },
+				},
+			})
 
 			-- Simple and easy statusline.
 			--  You could remove this setup call if you don't like it,

@@ -14,8 +14,8 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
-vim.keymap.set("n", "<Tab>", "<cmd>bnext<CR>")
-vim.keymap.set("n", "<S-Tab>", "<cmd>bprevious<CR>")
+-- vim.keymap.set("n", "<Tab>", "<cmd>bnext<CR>")
+-- vim.keymap.set("n", "<S-Tab>", "<cmd>bprevious<CR>")
 
 vim.keymap.set("n", "<A-j>", "<cmd>cnext<CR>")
 vim.keymap.set("n", "<A-k>", "<cmd>cprevious<CR>")
