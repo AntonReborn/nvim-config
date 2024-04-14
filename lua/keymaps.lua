@@ -38,3 +38,14 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("n", "<leader>,", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace word" })
+
+vim.keymap.set("n", "<C-g>", "<cmd>silent !tmux neww ~/.config/utils/tmux-sessionizer.sh<CR>")
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww ~/.config/utils/tmux-sessionizer-favorites.sh<CR>")
+
+vim.keymap.set("n", "<leader>wa", function()
+	vim.cmd("silent !~/.config/utils/favorites.sh add " .. vim.fn.getcwd())
+end, { desc = "[A]dd project to the favorites" })
+
+vim.keymap.set("n", "<leader>wd", function()
+	vim.cmd("silent !~/.config/utils/favorites.sh remove " .. vim.fn.getcwd())
+end, { desc = "[R]emove project from the favorites" })

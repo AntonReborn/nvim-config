@@ -239,6 +239,7 @@ require("lazy").setup({
 
 	{ -- LSP Configuration & Plugins
 		"neovim/nvim-lspconfig",
+		event = "BufRead",
 		dependencies = {
 			-- Automatically install LSPs and related tools to stdpath for Neovim
 			"williamboman/mason.nvim",
@@ -620,6 +621,10 @@ require("lazy").setup({
 			vim.api.nvim_set_hl(0, "CmpItemAbbr", { bg = "none" })
 			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 			vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
+
+			vim.api.nvim_set_hl(0, "LspReferenceText", { fg = "#fdc38e", bg = "#1c1c1c" })
+			vim.api.nvim_set_hl(0, "LspReferenceRead", { fg = "#fdc38e", bg = "#21222c" })
+			vim.api.nvim_set_hl(0, "LspReferenceWrite", { fg = "#fdc38e", bg = "#21222c" })
 
 			-- You can configure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")

@@ -2,6 +2,7 @@ return {
 	"AntonReborn/harpoon",
 	branch = "sync-cursor",
 	dependencies = { "nvim-lua/plenary.nvim" },
+	lazy = false,
 	keys = {
 		{
 			"<leader>a",
@@ -21,7 +22,7 @@ return {
 		},
 
 		{
-			"<C-f>",
+			"<C-h>",
 			function()
 				require("harpoon"):list():select(1)
 			end,
@@ -49,7 +50,7 @@ return {
 				require("harpoon"):list():select(1)
 			end,
 			mode = "n",
-			{ desc = "[1]st buffer (<C-f>)" },
+			{ desc = "[1]st buffer (<C-h>)" },
 		},
 
 		{
