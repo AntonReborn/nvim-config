@@ -49,3 +49,49 @@ end, { desc = "[A]dd project to the favorites" })
 vim.keymap.set("n", "<leader>wr", function()
 	vim.cmd("silent !~/.config/utils/favorites.sh remove " .. vim.fn.getcwd())
 end, { desc = "[R]emove project from the favorites" })
+
+local keymap = vim.keymap.set
+
+-- cmake
+keymap("n", "<leader>cc", "<cmd>CMakeGenerate<CR>", { desc = "Generate" })
+keymap("n", "<leader>cb", "<cmd>CMakeBuild<CR>", { desc = "Build" })
+keymap("n", "<leader>cx", "<cmd>CMakeRun<CR>", { desc = "Run" })
+keymap("n", "<leader>cd", "<cmd>CMakeDebug<CR>", { desc = "Debug" })
+keymap("n", "<leader>ct", "<cmd>CMakeSelectBuildType<CR>", { desc = "Select Build Type" })
+keymap("n", "<leader>cu", "<cmd>CMakeSelectBuildTarget<CR>", { desc = "Select Build Target" })
+keymap("n", "<leader>cl", "<cmd>CMakeSelectLaunchTarget<CR>", { desc = "Select Launch Target" })
+keymap("n", "<leader>ceo", "<cmd>CMakeOpenExecutor<CR>", { desc = "Open CMake Executor" })
+keymap("n", "<leader>cec", "<cmd>CMakeCloseExecutor<CR>", { desc = "Close CMake Executor" })
+keymap("n", "<leader>cro", "<cmd>CMakeOpenRunner<CR>", { desc = "Open CMake Runner" })
+keymap("n", "<leader>crc", "<cmd>CMakeCloseRunner<CR>", { desc = "Close CMake Runner" })
+keymap("n", "<leader>ci", "<cmd>CMakeInstall<CR>", { desc = "Intall CMake target" })
+keymap("n", "<leader>cn", "<cmd>CMakeClean<CR>", { desc = "Clean CMake target" })
+keymap("n", "<leader>cs", function()
+	vim.cmd([[CMakeStopRunner]])
+	vim.cmd([[CMakeStopExecutor]])
+end, { desc = "Stop CMake Process" })
+
+-- Define a function to toggle the quickfix window
+function ToggleQuickfix()
+	-- Check if the quickfix window is open
+	local windows = vim.api.nvim_list_wins()
+	local quickfix_open = false
+
+	for _, win_id in ipairs(windows) do
+		local buf_id = vim.api.nvim_win_get_buf(win_id)
+		if vim.api.nvim_get_option_value("buftype", { buf = buf_id }) == "quickfix" then
+			quickfix_open = true
+			break
+		end
+	end
+
+	-- Toggle the quickfix window
+	if quickfix_open then
+		vim.cmd("cclose")
+	else
+		vim.cmd("copen")
+	end
+end
+
+-- Map <A-q> to toggle_quickfix function in normal mode
+keymap({ "n", "i" }, "<A-q>", ":lua ToggleQuickfix()<CR>", { noremap = true, silent = true })
