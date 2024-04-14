@@ -592,42 +592,18 @@ require("lazy").setup({
 		end,
 	},
 
-	{ -- You can easily change to a different colorscheme.
-		-- Change the name of the colorscheme plugin below, and then
-		-- change the command in the config to whatever the name of that colorscheme is.
-		--
-		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		-- "folke/tokyonight.nvim",
-		-- "rose-pine/neovim",
-		"Mofiqul/dracula.nvim",
-		-- name = "rose-pine",
+	{ -- Colorscheme
+		"catppuccin/nvim",
+		name = "catppuccin",
 		opts = {
-			-- styles = {
-			-- 	transparency = true,
-			-- },
-			transparent_bg = true,
+			transparent_background = true,
 		},
-		priority = 1000, -- Make sure to load this before all the other start plugins.
+		priority = 1000,
 		init = function()
-			-- Load the colorscheme here.
-			-- Like many other themes, this one has different styles, and you could load
-			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			-- vim.cmd.colorscheme("tokyonight-storm")
-			-- vim.cmd.colorscheme("rose-pine")
-			vim.cmd.colorscheme("dracula-soft")
+			vim.cmd.colorscheme("catppuccin-mocha")
 
 			vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-			vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#dd6e6b", bg = "none" })
-			vim.api.nvim_set_hl(0, "CmpItemAbbr", { bg = "none" })
 			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-			vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
-
-			vim.api.nvim_set_hl(0, "LspReferenceText", { fg = "#fdc38e", bg = "#1c1c1c" })
-			vim.api.nvim_set_hl(0, "LspReferenceRead", { fg = "#fdc38e", bg = "#21222c" })
-			vim.api.nvim_set_hl(0, "LspReferenceWrite", { fg = "#fdc38e", bg = "#21222c" })
-
-			-- You can configure highlights by doing something like:
-			vim.cmd.hi("Comment gui=none")
 		end,
 	},
 
@@ -708,9 +684,7 @@ require("lazy").setup({
 			incremental_selection = {
 				enable = true,
 				keymaps = {
-					-- init_selection = "gnn",
 					node_incremental = "v",
-					-- scope_incremental = "grc",
 					node_decremental = "V",
 				},
 			},
@@ -719,10 +693,6 @@ require("lazy").setup({
 			-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 			---@diagnostic disable-next-line: missing-fields
 			require("nvim-treesitter.configs").setup(opts)
-			-- There are additional nvim-treesitter modules that you can use to interact
-			-- with nvim-treesitter. You should go explore a few and see what interests you:
-			--
-			--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
 			--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
 			--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 		end,
