@@ -597,12 +597,14 @@ require("lazy").setup({
 		--
 		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
 		-- "folke/tokyonight.nvim",
-		"rose-pine/neovim",
-		name = "rose-pine",
+		-- "rose-pine/neovim",
+		"Mofiqul/dracula.nvim",
+		-- name = "rose-pine",
 		opts = {
-			styles = {
-				transparency = true,
-			},
+			-- styles = {
+			-- 	transparency = true,
+			-- },
+			transparent_bg = true,
 		},
 		priority = 1000, -- Make sure to load this before all the other start plugins.
 		init = function()
@@ -610,9 +612,14 @@ require("lazy").setup({
 			-- Like many other themes, this one has different styles, and you could load
 			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
 			-- vim.cmd.colorscheme("tokyonight-storm")
-			vim.cmd.colorscheme("rose-pine")
+			-- vim.cmd.colorscheme("rose-pine")
+			vim.cmd.colorscheme("dracula-soft")
+
 			vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+			vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#dd6e6b", bg = "none" })
+			vim.api.nvim_set_hl(0, "CmpItemAbbr", { bg = "none" })
 			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+			vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
 
 			-- You can configure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")
