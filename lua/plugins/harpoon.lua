@@ -22,7 +22,7 @@ return {
 		},
 
 		{
-			"<C-h>",
+			"<A-a>",
 			function()
 				require("harpoon"):list():select(1)
 			end,
@@ -30,16 +30,25 @@ return {
 		},
 
 		{
-			"<C-s>",
+			"<A-s>",
 			function()
 				require("harpoon"):list():select(2)
 			end,
 			mode = "n",
 		},
+
 		{
-			"<C-t>",
+			"<A-d>",
 			function()
 				require("harpoon"):list():select(3)
+			end,
+			mode = "n",
+		},
+
+		{
+			"<A-f>",
+			function()
+				require("harpoon"):list():select(4)
 			end,
 			mode = "n",
 		},

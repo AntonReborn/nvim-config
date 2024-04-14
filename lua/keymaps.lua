@@ -46,6 +46,6 @@ vim.keymap.set("n", "<leader>wa", function()
 	vim.cmd("silent !~/.config/utils/favorites.sh add " .. vim.fn.getcwd())
 end, { desc = "[A]dd project to the favorites" })
 
-vim.keymap.set("n", "<leader>wd", function()
+vim.keymap.set("n", "<leader>wr", function()
 	vim.cmd("silent !~/.config/utils/favorites.sh remove " .. vim.fn.getcwd())
 end, { desc = "[R]emove project from the favorites" })
