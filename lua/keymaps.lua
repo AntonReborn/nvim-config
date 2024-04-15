@@ -95,3 +95,5 @@ end
 
 -- Map <A-q> to toggle_quickfix function in normal mode
 keymap({ "n", "i" }, "<A-q>", ":lua ToggleQuickfix()<CR>", { noremap = true, silent = true })
+
+keymap("n", "<F5>", "<cmd>ClangdSwitchSourceHeader<CR>")
