@@ -498,19 +498,18 @@ require("lazy").setup({
 	-- 	dependencies = { "nvim-lua/plenary.nvim" },
 	-- 	opts = { signs = false },
 	-- },
-
+	{
+		"stevearc/oil.nvim",
+		config = true,
+		-- Optional dependencies
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		keys = {
+			{ "-", "<CMD>Oil<CR>" },
+		},
+	},
 	{ -- Collection of various small independent plugins/modules
 		"echasnovski/mini.nvim",
 		config = function()
-			require("mini.files").setup({
-				mappings = {
-					close = "q",
-				},
-			})
-
-			vim.keymap.set("n", "-", function()
-				MiniFiles.open()
-			end)
 			-- Better Around/Inside textobjects
 			--
 			-- Examples:
