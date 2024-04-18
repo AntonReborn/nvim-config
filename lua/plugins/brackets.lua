@@ -1,5 +1,5 @@
 return {
-	"abecodes/tabout.nvim",
+	-- "abecodes/tabout.nvim",
 	{
 		"windwp/nvim-autopairs",
 		event = InsertEnter,

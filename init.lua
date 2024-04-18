@@ -287,6 +287,10 @@ require("lazy").setup({
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 				callback = function(event)
+					local client = vim.lsp.get_client_by_id(event.data.client_id)
+					if client and client.name == "clangd" then
+						vim.keymap.set("n", "<F5>", "<cmd>ClangdSwitchSourceHeader<CR>")
+					end
 					-- NOTE: Remember that Lua is a real programming language, and as such it is possible
 					-- to define small helper and utility functions so you don't have to repeat yourself.
 					--
@@ -295,7 +299,7 @@ require("lazy").setup({
 					local map = function(keys, func, desc)
 						vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 					end
-
+					--
 					-- Jump to the definition of the word under your cursor.
 					--  This is where a variable was first declared, or where a function is defined, etc.
 					--  To jump back, press <C-t>.
@@ -500,7 +504,9 @@ require("lazy").setup({
 	-- },
 	{
 		"stevearc/oil.nvim",
-		config = true,
+		opts = {
+			default_file_explorer = true,
+		},
 		-- Optional dependencies
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		keys = {
