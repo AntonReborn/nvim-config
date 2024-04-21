@@ -107,7 +107,11 @@ require("lazy").setup({
 		"folke/which-key.nvim",
 		event = "VimEnter", -- Sets the loading event to 'VimEnter'
 		config = function() -- This is the function that runs, AFTER loading
-			require("which-key").setup()
+			require("which-key").setup({
+				-- icons = {
+				-- 	separator = "->",
+				-- },
+			})
 
 			-- Document existing key chains
 			require("which-key").register({
@@ -289,7 +293,7 @@ require("lazy").setup({
 				callback = function(event)
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 					if client and client.name == "clangd" then
-						vim.keymap.set("n", "<F5>", "<cmd>ClangdSwitchSourceHeader<CR>")
+						vim.keymap.set("n", "<F2>", "<cmd>ClangdSwitchSourceHeader<CR>")
 					end
 					-- NOTE: Remember that Lua is a real programming language, and as such it is possible
 					-- to define small helper and utility functions so you don't have to repeat yourself.
@@ -431,14 +435,13 @@ require("lazy").setup({
 
 			require("mason-lspconfig").setup({
 				handlers = {
-					function(server_name)
+					function(server_name) -- default
 						local server = servers[server_name] or {}
-						-- This handles overriding only values explicitly passed
-						-- by the server configuration above. Useful when disabling
-						-- certain features of an LSP (for example, turning off formatting for tsserver)
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 						require("lspconfig")[server_name].setup(server)
 					end,
+
+					["rust_analyzer"] = function() end,
 				},
 			})
 		end,
