@@ -4,7 +4,6 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -100,7 +99,7 @@ keymap("n", "<leader>cs", function()
 end, { desc = "Stop CMake Process" })
 
 -- Define a function to toggle the quickfix window
-function ToggleQuickfix()
+function ToggleQuickfix(buf_prefix)
 	-- Check if the quickfix window is open
 	local windows = vim.api.nvim_list_wins()
 	local quickfix_open = false
@@ -115,14 +114,18 @@ function ToggleQuickfix()
 
 	-- Toggle the quickfix window
 	if quickfix_open then
-		vim.cmd("cclose")
+		vim.cmd(buf_prefix .. "close")
 	else
-		vim.cmd("copen")
+		vim.cmd(buf_prefix .. "open")
 	end
 end
 
+vim.keymap.set("n", "<Leader>q", function()
+	vim.diagnostic.setloclist({ open = false })
+	ToggleQuickfix("l")
+end, { desc = "Toggle diagnostic [Q]uickfix list" })
 -- Map <A-q> to toggle_quickfix function in normal mode
-keymap({ "n", "i" }, "<A-q>", ":lua ToggleQuickfix()<CR>", { noremap = true, silent = true })
+keymap({ "n", "i" }, "<A-q>", ":lua ToggleQuickfix('c')<CR>", { noremap = true, silent = true })
 
 -- debug
 keymap(

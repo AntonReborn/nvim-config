@@ -295,6 +295,11 @@ require("lazy").setup({
 					if client and client.name == "clangd" then
 						vim.keymap.set("n", "<F2>", "<cmd>ClangdSwitchSourceHeader<CR>")
 					end
+
+					vim.defer_fn(function()
+						vim.lsp.inlay_hint.enable(event.bufnr, true)
+					end, 1000)
+
 					-- NOTE: Remember that Lua is a real programming language, and as such it is possible
 					-- to define small helper and utility functions so you don't have to repeat yourself.
 					--
@@ -632,6 +637,7 @@ require("lazy").setup({
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
 		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
 		icons = vim.g.have_nerd_font and {} or {
+
 			cmd = "⌘",
 			config = "🛠",
 			event = "📅",

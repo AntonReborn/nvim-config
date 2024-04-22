@@ -31,3 +31,14 @@ vim.api.nvim_create_autocmd({ "QuitPre" }, {
 		require("harpoon"):list():sync_cursor()
 	end,
 })
+
+vim.api.nvim_create_autocmd({ "User" }, {
+	pattern = "LazyDone",
+	callback = function()
+		if require("harpoon"):list():length() > 0 and vim.fn.argv()[1] == "." then
+			vim.defer_fn(function()
+				require("harpoon"):list():select(1)
+			end, 0)
+		end
+	end,
+})

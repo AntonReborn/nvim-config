@@ -1,7 +1,7 @@
 -- [[ Setting options ]]
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldmethod = "expr"
-vim.opt.foldlevel = 3
+vim.opt.foldlevel = 5
 
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!

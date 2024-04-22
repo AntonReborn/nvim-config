@@ -107,12 +107,6 @@ return {
 		},
 	},
 
-	init = function()
-		if require("harpoon"):list():length() > 0 and vim.fn.argv()[1] == "." then
-			require("harpoon"):list():select(1)
-		end
-	end,
-
 	config = function()
 		local harpoon = require("harpoon")
 		harpoon:setup({
