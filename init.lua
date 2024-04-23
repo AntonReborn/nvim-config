@@ -36,25 +36,30 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
 	{
-		"bbjornstad/pretty-fold.nvim",
+		"kevinhwang91/nvim-ufo",
+		dependencies = { "kevinhwang91/promise-async" },
+		-- event = "BufReadPost",
 		opts = {
-			sections = {
-				left = {
-					"content",
-				},
-				right = {
-					" ",
-					"number_of_folded_lines",
-					": ",
-					"percentage",
-					" ",
-					function(config)
-						return config.fill_char:rep(3)
-					end,
-				},
-			},
+			provider_selector = function(_, _, _)
+				return { "lsp", "indent" }
+			end,
 		},
+		init = function()
+			vim.keymap.set("n", "zR", function()
+				require("ufo").openAllFolds()
+			end)
+			vim.keymap.set("n", "zM", function()
+				require("ufo").closeAllFolds()
+			end)
+			vim.keymap.set("n", "zK", function()
+				local winid = require("ufo").peekFoldedLinesUnderCursor()
+				if not winid then
+					vim.lsp.buf.hover()
+				end
+			end)
+		end,
 	},
+
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 

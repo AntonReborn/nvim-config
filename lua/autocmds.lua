@@ -12,18 +12,23 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
-	pattern = { "?*" },
-	desc = "save view (folds), when closing file",
-	command = "mkview 1",
+-- vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
+-- 	pattern = { "?*" },
+-- 	desc = "save view (folds), when closing file",
+-- 	command = "mkview 1",
+-- })
+--
+-- vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+-- 	pattern = { "?*" },
+-- 	desc = "load view (folds), when opening file",
+-- 	command = "silent! loadview 1",
+-- })
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	pattern = "*",
+	callback = function()
+		vim.cmd("UfoEnableFold")
+	end,
 })
-
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
-	pattern = { "?*" },
-	desc = "load view (folds), when opening file",
-	command = "silent! loadview 1",
-})
-
 vim.api.nvim_create_autocmd({ "QuitPre" }, {
 	pattern = "*",
 	callback = function()
