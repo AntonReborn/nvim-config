@@ -29,9 +29,15 @@ return {
 				cmd = function()
 					local mason_registry = require("mason-registry")
 					local ra_binary = mason_registry.is_installed("rust-analyzer")
-							-- This may need to be tweaked, depending on the operating system.
-							and mason_registry.get_package("rust-analyzer"):get_install_path() .. "/rust-analyzer-aarch64-apple-darwin"
-						or "rust-analyzer"
+						-- This may need to be tweaked, depending on the operating system.
+						and mason_registry.get_package("rust-analyzer"):get_install_path()
+
+					if vim.loop.os_uname().sysname == "Linux" then
+						ra_binary = ra_binary .. "/rust-analyzer-x86_64-unknown-linux-gnu"
+					else
+						ra_binary = ra_binary .. "/rust-analyzer-aarch64-apple-darwin"
+					end
+
 					return { ra_binary } -- You can add args to the list, such as '--log-file'
 				end,
 			},

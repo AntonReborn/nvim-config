@@ -181,7 +181,11 @@ keymap({ "n", "t" }, "<A-o>", function()
 end, { silent = true, desc = "step over" })
 
 keymap({ "n", "t" }, "<A-c>", function()
-	require("dap").continue()
+	if require("dap").session() == nil then
+		vim.cmd.RustLsp("debuggables")
+	else
+		require("dap").continue()
+	end
 end, { silent = true, desc = "continue" })
 
 keymap({ "n", "t" }, "<A-h>", function()
