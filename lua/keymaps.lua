@@ -38,17 +38,17 @@ end
 
 vim.keymap.set("n", "<A-j>", function()
 	if is_location_list_open() then
-		vim.cmd("lnext")
+		vim.cmd("silent! lnext")
 	else
-		vim.cmd("cnext")
+		vim.cmd("silent! cnext")
 	end
 end)
 
 vim.keymap.set("n", "<A-k>", function()
 	if is_location_list_open() then
-		vim.cmd("lprevious")
+		vim.cmd("silent! lprevious")
 	else
-		vim.cmd("cprevious")
+		vim.cmd("silent! cprevious")
 	end
 end)
 

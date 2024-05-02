@@ -494,19 +494,27 @@ require("lazy").setup({
 		},
 	},
 
-	{ -- Colorscheme
-		"catppuccin/nvim",
-		name = "catppuccin",
-		opts = {
-			transparent_background = true,
-		},
+	{
+		"ellisonleao/gruvbox.nvim",
 		priority = 1000,
+		config = true,
 		init = function()
-			vim.cmd.colorscheme("catppuccin-mocha")
-
-			-- vim.api.nvim_set_hl(0, "NormalNC", { bg = "black", fg = "black" })
+			vim.cmd.colorscheme("gruvbox")
 		end,
 	},
+	-- { -- Colorscheme
+	-- 	"catppuccin/nvim",
+	-- 	name = "catppuccin",
+	-- 	opts = {
+	-- 		transparent_background = true,
+	-- 	},
+	-- 	priority = 1000,
+	-- 	init = function()
+	-- 		vim.cmd.colorscheme("catppuccin-macchiato")
+	--
+	-- 		-- vim.api.nvim_set_hl(0, "NormalNC", { bg = "black", fg = "black" })
+	-- 	end,
+	-- },
 
 	-- Highlight todo, notes, etc in comments
 	-- {
