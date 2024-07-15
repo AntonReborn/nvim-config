@@ -84,6 +84,9 @@ end, { desc = "[R]emove project from the favorites" })
 
 local keymap = vim.keymap.set
 
+vim.keymap.set("n", "<leader>hh", function()
+	vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled())
+end, { desc = "Toggle inlay [h]ints" })
 -- cmake
 keymap("n", "<leader>cc", "<cmd>CMakeGenerate<CR>", { desc = "Generate" })
 keymap("n", "<leader>cb", "<cmd>CMakeBuild<CR>", { desc = "Build" })

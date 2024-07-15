@@ -17,7 +17,7 @@ return {
 		local dapui = require("dapui")
 
 		local file = require("utils.file")
-		-- local codelldb = require("utils.codelldb")
+		local codelldb = require("utils.codelldb")
 
 		dap_virtual_text_status.setup({
 			enabled = true, -- enable this plugin (the default)
@@ -158,17 +158,17 @@ return {
 			},
 		}
 
-		-- dap.adapters.codelldb = {
-		-- 	type = "server",
-		-- 	port = "${port}",
-		-- 	executable = {
-		-- 		-- CHANGE THIS to your path!
-		-- 		command = codelldb.codelldb_path,
-		-- 		args = { "--port", "${port}" },
-		--
-		-- 		-- On windows you may have to uncomment this:
-		-- 		-- detached = false,
-		-- 	},
-		-- }
+		dap.adapters.codelldb = {
+			type = "server",
+			port = "${port}",
+			executable = {
+				-- CHANGE THIS to your path!
+				command = codelldb.codelldb_path,
+				args = { "--port", "${port}" },
+
+				-- On windows you may have to uncomment this:
+				-- detached = false,
+			},
+		}
 	end,
 }
