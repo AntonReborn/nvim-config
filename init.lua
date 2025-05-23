@@ -3,7 +3,7 @@
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
+vim.g.python3_host_prog = vim.fn.expand("./.venv/bin/python3")
 vim.g.have_nerd_font = true
 
 require("options")
@@ -166,7 +166,7 @@ require("lazy").setup({
 						vim.keymap.set("n", "<F2>", "<cmd>ClangdSwitchSourceHeader<CR>")
 					end
 
-					vim.lsp.inlay_hint.enable(0, true)
+					-- vim.lsp.inlay_hint.enable(0, true)
 
 					local map = function(keys, func, desc)
 						vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
@@ -241,15 +241,7 @@ require("lazy").setup({
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			require("mason-lspconfig").setup({
-				handlers = {
-					function(server_name)
-						local server = servers[server_name] or {}
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-						require("lspconfig")[server_name].setup(server)
-					end,
-
-					["rust_analyzer"] = function() end,
-				},
+				automatic_enable = true,
 			})
 		end,
 	},
@@ -288,6 +280,39 @@ require("lazy").setup({
 		config = true,
 		init = function()
 			vim.cmd.colorscheme("gruvbox")
+		end,
+	},
+	{
+		"benlubas/molten-nvim",
+		version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
+		build = ":UpdateRemotePlugins",
+		init = function()
+			-- this is an example, not a default. Please see the readme for more configuration options
+			vim.g.molten_image_provider = "image.nvim"
+
+			vim.g.molten_output_win_max_height = 12
+		end,
+	},
+	{
+		"3rd/image.nvim",
+		lazy = false, -- or set it to load with specific filetypes/events
+		config = function()
+			require("image").setup({
+				backend = "kitty",
+				max_width = 100, -- tweak to preference
+				max_height = 12, -- ^
+				max_height_window_percentage = math.huge, -- this is necessary for a good experience
+				max_width_window_percentage = math.huge,
+				window_overlap_clear_enabled = true,
+				window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
+				integrations = {
+					markdown = {
+						only_render_image_at_cursor = true, -- defaults to false
+						only_render_image_at_cursor_mode = "popup", -- "popup" or "inline", defaults to "popup"
+					},
+				},
+			})
+			-- require("image").setup({})
 		end,
 	},
 
